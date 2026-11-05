@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<rect width="64" height="64" rx="12" fill="#090909"/>
+<path d="M9 40h22l8-8H20l6-6h25l5-7H23z" fill="#e10600"/>
+<text x="31" y="51" font-family="Arial Black,Arial,sans-serif" font-size="16" font-style="italic" fill="#fff">365</text>
+</svg>

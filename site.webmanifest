@@ -1,0 +1,11 @@
+{
+  "name": "F1 365",
+  "short_name": "F1 365",
+  "description": "Tutto il mondo della Formula 1, 365 giorni l'anno.",
+  "lang": "it-IT",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090909",
+  "theme_color": "#e10600",
+  "icons": [{"src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml"}]
+}
