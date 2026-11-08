@@ -1,18 +1,141 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Formula 1 ogni giorno | F1 365</title><meta name="description" content="F1 365: news, calendario, risultati, classifiche, piloti, team e dati Formula 1 aggiornati.">
-<link rel="stylesheet" href="style.css"></head><body><header class="top"><a class="logo" href="index.html">F1 <span>365</span></a><nav class="nav">
-<a href="index.html">⌂ Home</a>
-<a href="news.html">▤ News</a>
-<a href="calendar.html">▦ Calendario</a>
-<a href="results.html">🏁 Risultati</a>
-<a href="standings.html">🏆 Classifiche</a>
-<a href="drivers.html">◉ Piloti</a>
-<a href="teams.html">👥 Team</a>
-<a href="live.html">◉ F1 Live</a>
-</nav></header>
-<section class="hero"><div class="hero-content"><div class="eyebrow">FORMULA 1 · 365 GIORNI L'ANNO</div><h1>IL MONDO F1.<br>OGNI GIORNO.</h1><p>Una homepage premium con news, calendario, risultati e classifiche aggiornati automaticamente.</p><a class="btn" href="news.html">Leggi le ultime news</a></div></section>
-<main class="container">
-<section class="section"><div class="section-head"><h2>Ultime news</h2><a class="muted" href="news.html">Vedi tutte →</a></div><div id="news" class="news-grid"><div class="loading">Caricamento news…</div></div></section>
-<section class="section"><div class="section-head"><h2>Campionato</h2></div><div id="kpis" class="kpis"><div class="loading">Caricamento dati…</div></div></section>
-<section class="section"><div class="section-head"><h2>Prossimo appuntamento</h2><a class="muted" href="calendar.html">Calendario completo →</a></div><div id="next" class="card"><div class="loading">Caricamento calendario…</div></div></section>
-</main><script src="app.js"></script><script>loadHome()</script><footer class="footer"><div class="container">F1 365 · Dati dinamici tramite API pubbliche. Le notizie riportano titolo, fonte e collegamento originale; nessun articolo viene ripubblicato.</div></footer></body></html>
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>F1 365 — La Formula 1, ogni giorno.</title>
+  <meta name="description" content="F1 365: news, Gran Premi, classifiche, piloti, team e statistiche di Formula 1.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="topbar wrap">
+      <span id="today">F1 365</span>
+      <span>•</span>
+      <span>La Formula 1, ogni giorno.</span>
+      <div class="toplinks">
+        <a href="https://www.formula1.com/" target="_blank" rel="noopener">Formula1.com</a>
+        <a href="https://www.fia.com/" target="_blank" rel="noopener">FIA</a>
+      </div>
+    </div>
+
+    <div class="brandbar">
+      <div class="wrap brand-inner">
+        <a class="brand" href="index.html" aria-label="F1 365 Home">
+          <span class="f1mark">F1</span><span class="brand365">365</span>
+          <small>La Formula 1, ogni giorno.</small>
+        </a>
+        <div class="brand-car" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <nav class="mainnav">
+      <div class="wrap navinner">
+        <a class="active" href="index.html">⌂ <span>HOME</span></a>
+        <a href="news.html">NEWS <b>⌄</b></a>
+        <a href="calendar.html">GARE <b>⌄</b></a>
+        <a href="drivers.html">PILOTI <b>⌄</b></a>
+        <a href="teams.html">TEAM <b>⌄</b></a>
+        <a href="standings.html">CLASSIFICHE <b>⌄</b></a>
+        <a href="results.html">STATISTICHE <b>⌄</b></a>
+        <a href="https://www.ferrari.com/" target="_blank" rel="noopener">FERRARI <b>⌄</b></a>
+        <a href="live.html">COMMUNITY <b>⌄</b></a>
+        <button class="searchBtn" type="button" aria-label="Cerca" onclick="toggleSearch()">⌕</button>
+      </div>
+    </nav>
+    <div id="searchBox" class="searchbox wrap" hidden>
+      <input id="searchInput" type="search" placeholder="Cerca su F1 365…" oninput="filterNews(this.value)">
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <article class="hero-story" id="heroStory">
+        <div class="hero-bg"></div>
+        <div class="hero-copy">
+          <span class="kicker">FORMULA 1</span>
+          <h1>Le ultime notizie di Formula 1</h1>
+          <p>News aggiornate automaticamente dalle principali fonti ufficiali.</p>
+          <a class="btn" href="news.html">Leggi tutte le news →</a>
+        </div>
+      </article>
+
+      <aside class="nextgp panel" id="nextGp">
+        <div class="panel-title">🏁 PROSSIMO GRAN PREMIO</div>
+        <div class="gp-body">
+          <div class="muted">Caricamento calendario…</div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="wrap news-layout">
+      <div>
+        <div class="section-head">
+          <h2>Ultime notizie</h2>
+          <a href="news.html">Tutte le news →</a>
+        </div>
+        <div id="newsGrid" class="news-grid">
+          <div class="loading">Caricamento news…</div>
+        </div>
+      </div>
+
+      <aside class="panel standings-panel">
+        <div class="panel-title">🏆 CLASSIFICHE</div>
+        <div class="tabs">
+          <button class="tab active" onclick="showStandings('drivers',this)">Piloti</button>
+          <button class="tab" onclick="showStandings('constructors',this)">Costruttori</button>
+        </div>
+        <div id="standingsList" class="standings-list">Caricamento…</div>
+        <a class="btn wide" href="standings.html">Classifica completa →</a>
+      </aside>
+    </section>
+
+    <section class="wrap lower-grid">
+      <div class="panel calendar-panel">
+        <div class="section-head compact"><h2>Gran Premi 2026</h2><a href="calendar.html">Calendario →</a></div>
+        <div id="calendarList">Caricamento…</div>
+        <a class="btn wide" href="calendar.html">Calendario completo →</a>
+      </div>
+
+      <div class="panel teams-panel">
+        <div class="section-head compact"><h2>Team</h2><a href="teams.html">Tutti →</a></div>
+        <div id="teamsGrid" class="teams-grid">Caricamento…</div>
+        <a class="btn wide" href="teams.html">Tutti i team →</a>
+      </div>
+
+      <div class="panel stats-panel">
+        <div class="section-head compact"><h2>Statistiche</h2><a href="results.html">Dettagli →</a></div>
+        <div class="stats-list">
+          <div><span>🏆 Vittorie</span><strong id="wins">—</strong></div>
+          <div><span>🥇 Pole position</span><strong id="poles">—</strong></div>
+          <div><span>🏁 GP disputati</span><strong id="races">—</strong></div>
+          <div><span>👤 Piloti</span><strong id="driverCount">—</strong></div>
+        </div>
+        <a class="btn wide" href="results.html">Statistiche complete →</a>
+      </div>
+    </section>
+
+    <section class="wrap promo">
+      <div class="promo-copy">
+        <span>F1 365</span>
+        <h2>Passione senza tempo.</h2>
+        <p>Segui ogni Gran Premio, ogni classifica e ogni aggiornamento in un unico posto.</p>
+      </div>
+      <a class="btn" href="news.html">Scopri di più →</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="brand footer-brand"><span class="f1mark">F1</span><span class="brand365">365</span><small>La Formula 1, ogni giorno.</small></div>
+      <div class="footer-links">
+        <a href="index.html">Home</a><a href="news.html">News</a><a href="calendar.html">Calendario</a>
+        <a href="standings.html">Classifiche</a><a href="drivers.html">Piloti</a><a href="teams.html">Team</a>
+      </div>
+      <div class="footer-source">Dati: Jolpica F1 · News: Formula1.com / FIA</div>
+    </div>
+  </footer>
+
+<script src="app.js"></script>
+</body>
+</html>
